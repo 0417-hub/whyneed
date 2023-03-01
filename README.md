@@ -1,24 +1,16 @@
-# README
+# WhyNeed
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## サービス概要
+衝動買いを防止し、本当に欲しいもの、本当に必要なものを見極められるようになるサービスです。
 
-Things you may want to cover:
+## メインのターゲットユーザー
+- よく衝動買いをしてしまう
+- 買ったはいいものの使用していないものやほとんど使わずに処分してしまうことがよくある
 
-* Ruby version
+## 解決方法
+以下3ステップで完了
+1. LINEアカウントに欲しいもののリンクを送信
+2. 一旦商品のことを忘れて過ごす
+3. 1週間後に来るメッセージを確認し、それでも欲しい場合のみ購入しましょう
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## なぜこのサービスを作りたいのか

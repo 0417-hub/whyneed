@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  url: MyString
+  staus: 1
+  after_buy_status: 1
+  price: 1
+  user: one
+
+two:
+  url: MyString
+  staus: 1
+  after_buy_status: 1
+  price: 1
+  user: two

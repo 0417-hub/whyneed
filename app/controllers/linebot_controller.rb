@@ -11,6 +11,10 @@ class LinebotController < ApplicationController
             type: "text",
             text: event.message["text"]
           }
+          message = [{type: "text", text: "URLを受け取りました！"},
+            {type: "text", text: 'メッセージ2'},
+            {type: "text", text: '1週間後にまたご連絡します！'}
+          ]
           client.reply_message(event['replyToken'], message)
         end
       end

@@ -14,13 +14,15 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          if event.message["text"].include?("http", "https")
+          if event.message["text"].include?("https")
             message = [{type: "text", text: "URLを受け取りました！"},
               {type: "text", text: event.message["text"]},
               {type: "text", text: '1週間後にまたご連絡します！'}
             ]
-            client.reply_message(event['replyToken'], message)
+          else
+            message = {type: "text", text: "#{event.message["text"]}が送られました"}
           end
+          client.reply_message(event['replyToken'], message)
         end
       end
     end

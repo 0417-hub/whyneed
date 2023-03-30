@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2023_03_02_123513) do
 
   create_table "items", force: :cascade do |t|
     t.string "url"
-    t.integer "staus"
+    t.integer "status"
     t.integer "after_buy_status"
     t.integer "price"
     t.integer "user_id", null: false

@@ -1,28 +1,8 @@
 class LinebotController < ApplicationController
   def callback
-    body = request.body.read
-    events = client.parse_events_from(body)
-    events.each do |event|
-      case event
-      when Line::Bot::Event::Message
-        case event.type
-        when Line::Bot::Event::MessageType::Text
-          message = [{type: "text", text: "URLを受け取りました！"},
-            {type: "text", text: event.message["text"]},
-            {type: "text", text: '1週間後にまたご連絡します！'}
-          ]
-          client.reply_message(event['replyToken'], message)
-        end
-      end
-    end
-  end
+    @linebot = Linebot.new(request: request)
+    @linebot.respond_to_user
 
-  private
-
-  def client
-    @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    }
+    head :ok
   end
 end

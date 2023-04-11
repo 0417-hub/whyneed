@@ -1,0 +1,8 @@
+# fly.toml file generated for whyneed on 2023-04-09T22:28:43+09:00
+
+app = "whyneed"
+primary_region = "nrt"
+
+[[statics]]
+  guest_path = "/rails/public"
+  url_prefix = "/"

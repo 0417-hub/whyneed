@@ -149,7 +149,7 @@ namespace :think_tasks do
   end
 
   desc "3回目のthinkを選択したユーザーへの通知"
-  task :send_think_more_message => :environment do
+  task :send_think_more_two_message => :environment do
     items = Item.where("updated_at < ?", 3.weeks.ago).where(status: "think")
 
     items.each do |item|
@@ -169,7 +169,7 @@ namespace :think_tasks do
   end
   
   desc "4回目のthinkを選択したユーザーへの通知"
-  task :send_think_more_message => :environment do
+  task :send_think_end_message => :environment do
     items = Item.where("updated_at < ?", 4.weeks.ago).where(status: "think")
 
     items.each do |item|

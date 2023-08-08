@@ -34,14 +34,14 @@ module LinebotEvent
         case event.type
         when Line::Bot::Event::MessageType::Text
           # TODO: itemのstatusには、ユーザーからのリプライ待ちかそうでないかの2種類ある（わかりやすい命名が必要!!）
-          if event.message["text"].include?("https")
+          if event.message["text"].start_with?("https")
             # TODO: Item保存処理かく
             message = [{type: "text", text: "URLを受け取りました！"},
               {type: "text", text: event.message["text"]},
               {type: "text", text: '1週間後にまたご連絡します！'}
             ]
             reply_to_client(client, event['replyToken'], message)
-            item = Item.new(text: event.message["text"])
+            item = Item.new(url: event.message["text"])
             item.save
           end
 
@@ -49,9 +49,9 @@ module LinebotEvent
           items = @user.items.search_wating_for_reply
           items.each do |item|
             # ここに全体を入れる？
-            case item.status # item.statusになる？
-            when 'first_message' #別のものに変える
-              case replied_message
+            case item.status 
+            when 'first_message' # item.statusが”3択質問後”の場合、
+              case replied_message # ”3択質問の回答が以下の場合、
               when '1'
                 @response.add_bought_message #購入した場合のメッセージ
               when '2'

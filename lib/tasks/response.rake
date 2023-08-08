@@ -1,15 +1,16 @@
 namespace :response do
+  # $ rails response:check_today
   desc '今日通知が必要かチェックする'
   # コンソールから rake task:check_today で動作確認
   task check_today: :environment do
     # items1 = Item.where('updated_at < ?', 1.week.ago).order(id: :asc) # 動作確認の際は、変える
-    items1 = [Item.first]
+    items1 = Item.waiting_for_first_message_reply.where('updated_at < ? AND ? < updated_at', 1.week.ago, 2.week.ago).order(id: :asc)
     # items1 = Item.where('updated_at < ?', 5.second.ago).order(id: :asc) # 動作確認の際は、変える
-    items2 = [Item.second]
+    items2 = Item.waiting_for_second_weeks_message_reply.where('updated_at < ? AND ? < updated_at', 2.week.ago, 3.week.ago).order(id: :asc)
     # items2 = Item.where('updated_at < ?', 5.second.ago).order(id: :asc) # 動作確認の際は、変える
-    items3 = []
+    items3 = Item.waiting_for_third_weeks_message_reply.where('updated_at < ? AND ? < updated_at', 3.week.ago, 4.week.ago).order(id: :asc)
     # items3 = Item.where('updated_at < ?', 5.second.ago).order(id: :asc) # 動作確認の際は、変える
-    items4 = []
+    items4 = Item.waiting_for_one_month_message_reply.where('updated_at < ?', 4.week.ago).order(id: :asc)
     # items4 = Item.where('updated_at < ?', 5.second.ago).order(id: :asc) # 動作確認の際は、変える
 
     # とりあえずなし！
@@ -31,6 +32,8 @@ namespace :response do
       # userに通知を送る
       linebot = Linebot.new
       linebot.push(item.user, text)
+      # itemのstatus変更
+      item.waiting_for_first_message_reply!
     end
 
     items2&.each do |item|
@@ -46,6 +49,7 @@ namespace :response do
       # userに通知を送る
       linebot = Linebot.new
       linebot.push(item.user, text)
+      item.waiting_for_second_weeks_message_reply!
     end
 
     items3&.each do |item|
@@ -61,6 +65,7 @@ namespace :response do
       # userに通知を送る
       linebot = Linebot.new
       linebot.push(item.user, text)
+      item.waiting_for_third_weeks_message_reply!
     end
 
     items4&.each do |item|
@@ -76,6 +81,7 @@ namespace :response do
       # userに通知を送る
       linebot = Linebot.new
       linebot.push(item.user, text)
+      item.waiting_for_one_month_message_reply!
     end
   end
 end
@@ -92,10 +98,10 @@ end
 #   end
 # end
 
-namespase :bought_tasks do
-  desk "buyを選択したユーザーへの1ヶ月後の通知が必要かチェックする"
+namespace :bought_tasks do
+  desc "buyを選択したユーザーへの1ヶ月後の通知が必要かチェックする"
   task :send_buy_message => :environment do
-    items Item.where("updated_at > ?", 1.month.ago).where(status: "buy")
+    items = Item.where("updated_at < ?", 1.month.ago).where(status: :waiting_for_one_month_message_reply)
 
     items.each do |item|
 
@@ -118,8 +124,6 @@ namespace :think_tasks do
 
     items.each do |item|
       # add_think_messageの送信処理をここに実装する
-      # 例: item.add_think_message
-      # puts "Sending think message for item: #{item.id}"
       text = <<~TEXT
         再検討だね！
         1週間後にまた連絡するね！

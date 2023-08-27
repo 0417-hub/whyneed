@@ -31,6 +31,7 @@ module LinebotEvent
   def main_action(event)
     case event
     when Line::Bot::Event::Message
+      @user = User.find_or_create_by(line_id: event['source']['userId'])
         case event.type
         when Line::Bot::Event::MessageType::Text
           # TODO: itemのstatusには、ユーザーからのリプライ待ちかそうでないかの2種類ある（わかりやすい命名が必要!!）

@@ -59,4 +59,6 @@ gem 'dotenv-rails'
 gem 'whenever', require: false
 gem "dockerfile-rails", ">= 1.2", :group => :development
 
-gem "pg", "~> 1.4"
+
+gem "psych", "<4"
+

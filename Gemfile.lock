@@ -124,7 +124,7 @@ GEM
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    pg (1.4.6)
+    psych (3.3.4)
     public_suffix (5.0.1)
     puma (4.3.12)
       nio4r (~> 2.0)
@@ -239,7 +239,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   line-bot-api
   listen (~> 3.2)
-  pg (~> 1.4)
+  psych (< 4)
   puma (~> 4.1)
   rails (~> 6.0.6, >= 6.0.6.1)
   sass-rails (>= 6)

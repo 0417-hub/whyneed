@@ -41,7 +41,7 @@ module LinebotEvent
               {type: "text", text: event.message["text"]},
               {type: "text", text: '1週間後にまたご連絡します！'}
             ]
-            reply_to_client(client, event['replyToken'], message)
+          reply_to_client(client, event['replyToken'], message.map{|h| h[:text]}.join("\n"))
             item = Item.new(url: event.message["text"])
             item.save
           end
